@@ -21,3 +21,12 @@ class Comment(db.Model):
   postedBy = db.Column(db.String(255), ForeignKey('users.id'))
   datePosted = db.Column(db.DateTime, default = datetime.utcnow)
 
+class Vote(db.Model):
+  '''
+  Defines arguments for vote instances and stores them in votes table
+  '''
+  __tablename__='votes'
+  id = db.Column(db.Integer, primary_key = True)
+  voteCount = db.Column(db.Integer)
+  voter = db.Column(db.String(255), ForeignKey('users.id'))
+
