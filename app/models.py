@@ -10,6 +10,7 @@ class Pitch(db.Model):
   datePosted = db.Column(db.DateTime, default = datetime.utcnow)
   votes = db.Column(db.Integer, db.ForeignKey('votes.id'))
   postedBy = db.Column(db.String, db.ForeignKey('users.id'))
+  users = db.relationship('User', backref='users', lazy='dynamic')
 
 class Comment(db.Model):
   '''
@@ -29,4 +30,20 @@ class Vote(db.Model):
   id = db.Column(db.Integer, primary_key = True)
   voteCount = db.Column(db.Integer)
   voter = db.Column(db.String(255), ForeignKey('users.id'))
+  pitches = db.relationship('Pitch', backref = 'pitches', lazy='dynamic')
 
+class User(db.Model):
+  '''
+  Class that defines arguments for user instances and stores them in users table
+  '''
+  __tablename__='users'
+  id = db.Column(db.Integer, primary_key = True)
+  name = db.Column(db.String(255))
+  userBio = db.Column(db.String(255))
+  photo_path = db.Column(db.String(255))
+  pitchesCreated = db.Column(db.Integer, ForeignKey('pitches.id'))
+  password_hash = db.Column(db.String())
+  email = db.Column(db.String(), unique = True, index = True)
+  pitches = db.relationship('Pitch', backref='pitches', lazy='dynamic')
+  comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
+  votes = db.relarionship('Vote', backref = 'votes', lazy = 'dynamic')
