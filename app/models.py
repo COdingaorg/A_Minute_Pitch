@@ -1,3 +1,5 @@
+from . import db
+
 class Pitch(db.Model):
   '''
   Defines arguments for pitch instances
@@ -7,7 +9,7 @@ class Pitch(db.Model):
   title = db.Column(db.String(255))
   category = db.Column(db.String(255))
   content = db.Column(db.String(255))
-  datePosted = db.Column(db.DateTime, default = datetime.utcnow)
+  datePosted = db.Column(db.DateTime,default=datetime.utcnow)
   votes = db.Column(db.Integer, db.ForeignKey('votes.id'))
   postedBy = db.Column(db.String, db.ForeignKey('users.id'))
   users = db.relationship('User', backref='users', lazy='dynamic')
@@ -19,8 +21,8 @@ class Comment(db.Model):
   __tablename__='comments'
   id = db.Column(db.Integer, primary_key = True)
   content = db.Column(db.String(255))
-  postedBy = db.Column(db.String(255), ForeignKey('users.id'))
-  datePosted = db.Column(db.DateTime, default = datetime.utcnow)
+  postedBy = db.Column(db.String(255), db.ForeignKey('users.id'))
+  datePosted = db.Column(db.DateTime,default=datetime.utcnow)
 
 class Vote(db.Model):
   '''
@@ -29,7 +31,7 @@ class Vote(db.Model):
   __tablename__='votes'
   id = db.Column(db.Integer, primary_key = True)
   voteCount = db.Column(db.Integer)
-  voter = db.Column(db.String(255), ForeignKey('users.id'))
+  voter = db.Column(db.String(255), db.ForeignKey('users.id'))
   pitches = db.relationship('Pitch', backref = 'pitches', lazy='dynamic')
 
 class User(db.Model):
@@ -41,9 +43,19 @@ class User(db.Model):
   name = db.Column(db.String(255))
   userBio = db.Column(db.String(255))
   photo_path = db.Column(db.String(255))
-  pitchesCreated = db.Column(db.Integer, ForeignKey('pitches.id'))
+  pitchesCreated = db.Column(db.Integer, db.ForeignKey('pitches.id'))
   password_hash = db.Column(db.String())
   email = db.Column(db.String(), unique = True, index = True)
   pitches = db.relationship('Pitch', backref='pitches', lazy='dynamic')
   comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
   votes = db.relarionship('Vote', backref = 'votes', lazy = 'dynamic')
+  roleId = db.Column(db.Integer, db.ForeignKey('roles.id'))
+
+class Role(db.Model):
+  '''
+  Defines arguments for roles intances
+  '''
+  __tablename__='roles'
+  id = db.Column(db.Integer, primary_key = True)
+  name = db.Column(db.String(255))
+  users = db.relationship('User', backref='role', lazy='dynamic')

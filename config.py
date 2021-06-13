@@ -2,7 +2,7 @@ class Config:
   '''
   General configurations for the application
   '''
-  pass
+  SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:access@localhost/minute_pitch'
 
 class ProdConfig(Config):
   '''
