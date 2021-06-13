@@ -1,3 +1,4 @@
+from sqlalchemy.orm import lazyload
 from . import db
 from datetime import datetime
 
@@ -12,7 +13,7 @@ class Pitch(db.Model):
   content = db.Column(db.String(255))
   datePosted = db.Column(db.DateTime,default=datetime.utcnow)
   votes = db.Column(db.Integer, db.ForeignKey('votes.id'))
-  postedBy = db.Column(db.Integer, db.ForeignKey('users.id'))
+  postedBy = db.Column(db.Integer, db.ForeignKey('profiles.id'))
   users = db.relationship('User', backref='users', lazy='dynamic')
   comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
 
@@ -44,15 +45,13 @@ class User(db.Model):
   __tablename__='users'
   id = db.Column(db.Integer, primary_key = True)
   name = db.Column(db.String(255))
-  userBio = db.Column(db.String(255))
-  photo_path = db.Column(db.String(255))
-  pitchesCreated = db.Column(db.Integer, db.ForeignKey('pitches.id'))
   password_hash = db.Column(db.String())
   email = db.Column(db.String(), unique = True, index = True)
+  roleId = db.Column(db.Integer, db.ForeignKey('roles.id'))
+  profile = db.relationship('UserProfile', backref = 'profile', lazy = 'dynamic')
   pitches = db.relationship('Pitch', backref='pitches', lazy='dynamic')
   comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
   votes = db.relationship('Vote', backref = 'votes', lazy = 'dynamic')
-  roleId = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
   def save(self):
     db.session.add()
@@ -67,3 +66,14 @@ class Role(db.Model):
   id = db.Column(db.Integer, primary_key = True)
   name = db.Column(db.String(255))
   users = db.relationship('User', backref='role', lazy='dynamic')
+
+class UserProfile(db.Model):
+  '''
+  Defines arguments for photoprofile instances
+  '''
+  __tablename__= 'profiles'
+  id = db.Column(db.Integer, primary_key = True)
+  photo_path = db.Column(db.String())
+  userBio = db.Column(db.String(255))
+  userId = db.Column(db.Integer, db.ForeignKey('users.id'))
+  pitchesCreated = db.Column(db.Integer, db.ForeignKey('pitches.id'))
