@@ -14,6 +14,7 @@ class Pitch(db.Model):
   votes = db.Column(db.Integer, db.ForeignKey('votes.id'))
   postedBy = db.Column(db.String, db.ForeignKey('users.id'))
   users = db.relationship('User', backref='users', lazy='dynamic')
+  comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
 
 class Comment(db.Model):
   '''
@@ -24,6 +25,7 @@ class Comment(db.Model):
   content = db.Column(db.String(255))
   postedBy = db.Column(db.String(255), db.ForeignKey('users.id'))
   datePosted = db.Column(db.DateTime,default=datetime.utcnow)
+  pitchId = db.Column(db.Interger, db.ForeignKey('pitches.id'))
 
 class Vote(db.Model):
   '''
