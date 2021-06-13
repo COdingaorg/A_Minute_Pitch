@@ -1,4 +1,5 @@
 from . import db
+from datetime import datetime
 
 class Pitch(db.Model):
   '''
@@ -48,8 +49,13 @@ class User(db.Model):
   email = db.Column(db.String(), unique = True, index = True)
   pitches = db.relationship('Pitch', backref='pitches', lazy='dynamic')
   comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
-  votes = db.relarionship('Vote', backref = 'votes', lazy = 'dynamic')
+  votes = db.relationship('Vote', backref = 'votes', lazy = 'dynamic')
   roleId = db.Column(db.Integer, db.ForeignKey('roles.id'))
+
+  def save(self):
+    db.session.add()
+    db.session.commit()
+
 
 class Role(db.Model):
   '''
