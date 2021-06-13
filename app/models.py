@@ -12,7 +12,7 @@ class Pitch(db.Model):
   content = db.Column(db.String(255))
   datePosted = db.Column(db.DateTime,default=datetime.utcnow)
   votes = db.Column(db.Integer, db.ForeignKey('votes.id'))
-  postedBy = db.Column(db.String, db.ForeignKey('users.id'))
+  postedBy = db.Column(db.Integer, db.ForeignKey('users.id'))
   users = db.relationship('User', backref='users', lazy='dynamic')
   comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
 
@@ -23,9 +23,9 @@ class Comment(db.Model):
   __tablename__='comments'
   id = db.Column(db.Integer, primary_key = True)
   content = db.Column(db.String(255))
-  postedBy = db.Column(db.String(255), db.ForeignKey('users.id'))
+  postedBy = db.Column(db.Integer, db.ForeignKey('users.id'))
   datePosted = db.Column(db.DateTime,default=datetime.utcnow)
-  pitchId = db.Column(db.Interger, db.ForeignKey('pitches.id'))
+  pitchId = db.Column(db.Integer, db.ForeignKey('pitches.id'))
 
 class Vote(db.Model):
   '''
@@ -34,7 +34,7 @@ class Vote(db.Model):
   __tablename__='votes'
   id = db.Column(db.Integer, primary_key = True)
   voteCount = db.Column(db.Integer)
-  voter = db.Column(db.String(255), db.ForeignKey('users.id'))
+  voter = db.Column(db.Integer, db.ForeignKey('users.id'))
   pitches = db.relationship('Pitch', backref = 'pitches', lazy='dynamic')
 
 class User(db.Model):
