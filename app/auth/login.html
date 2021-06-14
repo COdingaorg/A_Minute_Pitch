@@ -1,0 +1,28 @@
+{%extends 'macros.html'%}
+{% imports 'bootstrap/wtf.html' as wtf%}
+
+{%block head%}
+{{super()}}
+{%endblock%}
+
+{%block navbar%}
+{{super()}}
+{%endblock%}
+
+{%block content%}
+<div class="col-md-2"></div>
+<div class="col-md-8">
+  <!--Error message display-->
+  {% for messege in get_flashed_messages()%}
+  <div class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert">&timesb;</button>
+    {{message}}
+  </div>
+  {%endfor%}
+  <!--Login form-->
+  {{wtf.quick_form(login_form)}}
+  <p> Don't have an account yet? <a href="{{url_for('auth.register')}}">Sign up Here</a></p>
+</div>
+<div class="col-md-2"></div>
+
+{%endblock%}
