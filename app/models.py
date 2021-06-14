@@ -1,4 +1,4 @@
-from sqlalchemy.orm import lazyload
+from sqlalchemy.orm import backref, lazyload
 from . import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -17,7 +17,7 @@ class Pitch(db.Model):
   datePosted = db.Column(db.DateTime,default=datetime.utcnow)
   votes = db.Column(db.Integer, db.ForeignKey('votes.id'))
   postedBy = db.Column(db.Integer, db.ForeignKey('users.id'))
-  users = db.relationship('User', backref='users', lazy='dynamic')
+  users = db.relationship('User', backref=backref('users', lazy='dynamic'))
   comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
 
 class Comment(db.Model):
