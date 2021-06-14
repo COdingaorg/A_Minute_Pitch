@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from flask_wtf.recaptcha import validators
+from wtforms import StringField, PasswordField, SubmitField, ValidationError
 from wtforms.validators import Email, Required, EqualTo
 from ..models import User
 
@@ -9,3 +10,12 @@ class SignupForm(FlaskForm):
   password = PasswordField('Create password: ', validators=[Required(), EqualTo('password_confirm', message='Passwords must be the same')])
   password_confirm = PasswordField('Repeat Password: ', validators=[Required()])
   signup = SubmitField('signup')
+
+  def validate_username(self, data_field):
+    if User.query.filter_by(name=data_field.data).first():
+      raise ValidationError('username already taken')
+
+  def validate_email(self, data_field):
+    if User.query.filter_by(email=data_field.data).first():
+      raise ValidationError('Email already exists')
+      
