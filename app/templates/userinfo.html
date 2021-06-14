@@ -1,0 +1,15 @@
+{%extends 'macros.html'%}
+
+{%block head%}
+{{super()}}
+{%endblock%}
+
+{%block navbar%}
+{{super()}}
+{%endblock%}
+
+{%block content%}
+{{user.name | capitalize}}
+
+
+{%endblock%}

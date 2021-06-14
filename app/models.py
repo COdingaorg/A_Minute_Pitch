@@ -12,13 +12,14 @@ class Pitch(db.Model):
   __tablename__='pitches'
   id = db.Column(db.Integer, primary_key = True)
   title = db.Column(db.String(255))
-  category = db.Column(db.String(255))
+  category = db.Column(db.String(100), db.ForeignKey('categories.id'))
   content = db.Column(db.String(255))
   datePosted = db.Column(db.DateTime,default=datetime.utcnow)
   votes = db.Column(db.Integer, db.ForeignKey('votes.id'))
   postedBy = db.Column(db.Integer, db.ForeignKey('users.id'))
   users = db.relationship('User', backref=backref('users', lazy='dynamic'))
   comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
+  category_item = db.relationship('PitchCategory', backref=backref('category_item', lazy='dynamic'))
 
 class Comment(db.Model):
   '''
@@ -81,3 +82,11 @@ class UserProfile(db.Model):
   userBio = db.Column(db.String(255))
   userId = db.Column(db.Integer, db.ForeignKey('users.id'))
   pitchesCreated = db.Column(db.Integer, db.ForeignKey('pitches.id'))
+
+class PitchCategory(db.Model):
+
+  __tablename__ = 'categories'
+  id = db.Column(db.Integer, primary_key = True)
+  category = db.Column(db.String(100))
+  pitchesContained = db.Column(db.Integer, db.ForeignKey('pitches.id'))
+  pitchitem = db.relationship('Pitch', backref=backref('pitchitem', lazy='dynamic'))
