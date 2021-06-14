@@ -51,9 +51,9 @@ class User(UserMixin ,db.Model):
   password_hash = db.Column(db.String())
   email = db.Column(db.String(), unique = True, index = True)
   profile = db.relationship('UserProfile', backref = 'profile', lazy = 'dynamic')
-  pitches = db.relationship('Pitch', backref='pitches', lazy='dynamic')
-  comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
-  votes = db.relationship('Vote', backref = 'votes', lazy = 'dynamic')
+  pitchesAdded = db.relationship('Pitch', backref='pitchesAdded', lazy='dynamic')
+  commentsAdded = db.relationship('Comment', backref = 'commentsAdded', lazy = 'dynamic')
+  votesAdded = db.relationship('Vote', backref = 'votesAdded', lazy = 'dynamic')
 
   @property
   def password(self):
@@ -66,9 +66,6 @@ class User(UserMixin ,db.Model):
   def verify_password(self, password):
     return check_password_hash(self.password_hash, password)
 
-  def save(self):
-    db.session.add()
-    db.session.commit()
 
   @login_manager.user_loader
   def load_user(id):
