@@ -27,7 +27,7 @@ def login():
     
     flash('invalid username or password')
   title = 'Login'
-  return render_template('auth/templates/login.html', login_form = login_form, title = title)
+  return render_template('login.html', login_form = login_form, title = title)
 
 @auth.route('/logout')
 @login_required
