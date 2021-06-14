@@ -1,6 +1,6 @@
+import flask_sqlalchemy
 from flask_wtf import FlaskForm
-from flask_wtf.recaptcha import validators
-from wtforms import StringField, PasswordField, SubmitField, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, ValidationError, BooleanField
 from wtforms.validators import Email, Required, EqualTo, Length
 from ..models import User
 
@@ -18,3 +18,9 @@ class SignupForm(FlaskForm):
   def validate_email(self, data_field):
     if User.query.filter_by(email=data_field.data).first():
       raise ValidationError('Email already exists')
+
+class LoginForm(FlaskForm):
+  email = StringField('Your Email Address: ', validators=[Required(), Email()])
+  password = PasswordField('Enter Password: ', validators=[Required()])
+  remember = BooleanField('Remeber Me')
+  submit = SubmitField('Log in')

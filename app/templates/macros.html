@@ -34,7 +34,11 @@
           <a class="nav-link" href="#">Pricing</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/register">Log in</a>
+          {%if current_user.is_authenticated%}
+          <span class="name">{{current_user.name}}</span><a class="nav-link" href="{{url_for('auth.logout')}}">Log Out</a>
+          {%else%}
+          <span><a href="url_for('auth.login')">Log in</a></span>
+          {%endif%}
         </li>
       </ul>
     </div>
