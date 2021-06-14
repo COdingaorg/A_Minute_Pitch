@@ -1,1 +1,21 @@
-{{title}}
+{%extends 'macros.html'%}
+{%block head%}
+{{super()}}
+<link rel="stylesheet" href="../static/styles.css">
+{%endblock%}
+
+{%block navbar%}
+{{super()}}
+{%endblock%}
+
+{%block content%}
+
+<div id="four">
+  <h3>{{title}}</h3>
+</div>
+
+{%endblock%}
+
+{%block footer%}
+{{super()}}
+{%endblock%}
