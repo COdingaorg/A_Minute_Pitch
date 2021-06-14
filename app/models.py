@@ -2,6 +2,8 @@ from sqlalchemy.orm import lazyload
 from . import db
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+from . import login_manager
 
 class Pitch(db.Model):
   '''
@@ -14,7 +16,7 @@ class Pitch(db.Model):
   content = db.Column(db.String(255))
   datePosted = db.Column(db.DateTime,default=datetime.utcnow)
   votes = db.Column(db.Integer, db.ForeignKey('votes.id'))
-  postedBy = db.Column(db.Integer, db.ForeignKey('profiles.id'))
+  postedBy = db.Column(db.Integer, db.ForeignKey('users.id'))
   users = db.relationship('User', backref='users', lazy='dynamic')
   comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
 
@@ -39,7 +41,7 @@ class Vote(db.Model):
   voter = db.Column(db.Integer, db.ForeignKey('users.id'))
   pitches = db.relationship('Pitch', backref = 'pitches', lazy='dynamic')
 
-class User(db.Model):
+class User(UserMixin ,db.Model):
   '''
   Class that defines arguments for user instances and stores them in users table
   '''
@@ -64,10 +66,14 @@ class User(db.Model):
 
   def verify_password(self, password):
     return check_password_hash(self.password_hash, password)
-    
+
   def save(self):
     db.session.add()
     db.session.commit()
+
+  @login_manager.user_loader
+  def load_user(id):
+    return User.query.get(int(id))
 
 
 class Role(db.Model):
