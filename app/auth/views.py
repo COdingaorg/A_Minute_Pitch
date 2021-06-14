@@ -14,7 +14,7 @@ def register():
     db.session.commit()
     return redirect(url_for('auth.login'))
   title = "Create account"
-  return render_template('auth/register.html', signupForm = form, title = title)
+  return render_template('register.html', signupForm = form, title = title)
 
 @auth.route('/login', methods = ['GET', 'POST'])
 def login():

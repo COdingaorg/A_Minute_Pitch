@@ -50,7 +50,6 @@ class User(UserMixin ,db.Model):
   name = db.Column(db.String(255))
   password_hash = db.Column(db.String())
   email = db.Column(db.String(), unique = True, index = True)
-  roleId = db.Column(db.Integer, db.ForeignKey('roles.id'))
   profile = db.relationship('UserProfile', backref = 'profile', lazy = 'dynamic')
   pitches = db.relationship('Pitch', backref='pitches', lazy='dynamic')
   comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
@@ -74,16 +73,6 @@ class User(UserMixin ,db.Model):
   @login_manager.user_loader
   def load_user(id):
     return User.query.get(int(id))
-
-
-class Role(db.Model):
-  '''
-  Defines arguments for roles intances
-  '''
-  __tablename__='roles'
-  id = db.Column(db.Integer, primary_key = True)
-  name = db.Column(db.String(255))
-  users = db.relationship('User', backref='role', lazy='dynamic')
 
 class UserProfile(db.Model):
   '''
