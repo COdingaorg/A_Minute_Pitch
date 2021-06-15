@@ -40,11 +40,8 @@
       {% endif %}
   </div>
   {% if user == current_user %}
-   <a href="{{url_for('main.updateinfo', sname = user.name)">update Profile</a>
+   <a href="{{url_for('main.update_info', sname = user.name)}}">update Profile</a>
   {%endif%}
 </div>
 </div>
 {% endblock %}
-
-
-{%endblock%}

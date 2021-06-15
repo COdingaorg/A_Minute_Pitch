@@ -19,19 +19,23 @@ def index():
  return render_template('index.html', category1 = pitchcategory1, category2 = pitchcategory2,category3 = pitchcategory3,category4 = pitchcategory4,
   category5 = pitchcategory5,category6 = pitchcategory6,category7 = pitchcategory7,category8 = pitchcategory8 )
 
-@main.route('/<category>/pitches')
+@main.route('/pitches', methods =['GET','POST'])
 @login_required
-def new_pitch(id):
-  form = AddPitch
-  if form.validate_on_submit():
-    title = form.title.data
-    category = PitchCategory.query.filter_by(category = form.category.data).first()
-    content = form.content.data
+def new_pitch():
+  formAdd = AddPitch
+  if formAdd.validate_on_submit():
+    title = formAdd.title.data
+    category = PitchCategory.query.filter_by(category = formAdd.category.data).first()
+    content = formAdd.content.data
 
     pitch = Pitch(title=title, category=category, content=content)
 
     db.session.add(pitch)
     db.session.commit()
+    return redirect(url_for('main.index'))
+
+
+  return render_template('addpitch.html', addpitchform = formAdd)
 
 
 @main.route('/user/<sname>')
@@ -58,6 +62,6 @@ def update_info(sname):
     db.session.add(user)
     db.session.commit()
 
-    return redirect(url_for('.profile', sname=user.name))
+    return redirect(url_for('main.user_profile', sname=user.name))
   
-  return render_template('profile.updateinfo.html', form = form)
+  return render_template('updateinfo.html', form = form)

@@ -1,4 +1,6 @@
 {%extends 'macros.html'%}
+{% import 'bootstrap/wtf.html' as wtf%}
+
 {%block head%}
 {{super()}}
 {%endblock%}
@@ -8,7 +10,20 @@
 {%endblock%}
 
 {%block content%}
-<h2 class='test'>Homepage</h2>
+<div class="container">
+  <div class="row">
+<div class='test col-md-10'><img src="../static/images/impress.jpg" alt="impress" width="100%">
+  <div class="row">
+  <img class="col-md-4" src="../static/images/innovation_illo_465934_iv9u5y.jpg" alt="impress" height="100%">
+  <img class="col-md-4" src="../static/images/pitch.jpg" alt="impress" height="100%">
+  <img class="col-md-4" src="../static/images/thumbnail.png" alt="impress" height="100%">
+</div>
+</div>
+
+<div class="col-md-2"><a href="/pitches"><button class="btn btn-warning">Add Your Pitch</button> </a></div>
+</div>
+
+</div>
 {%endblock%}
 
 {%block footer%}
