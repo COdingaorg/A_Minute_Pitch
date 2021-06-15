@@ -1,8 +1,8 @@
 from flask import render_template, abort, redirect, url_for
 from flask_login import login_required
 from . import main
-from ..models import User, UserProfile, PitchCategory
-from .forms import UpdateProfile
+from ..models import User, UserProfile, PitchCategory, Pitch
+from .forms import AddPitch, UpdateProfile
 from .. import db
 
 @main.route('/')
@@ -19,10 +19,20 @@ def index():
  return render_template('index.html', category1 = pitchcategory1, category2 = pitchcategory2,category3 = pitchcategory3,category4 = pitchcategory4,
   category5 = pitchcategory5,category6 = pitchcategory6,category7 = pitchcategory7,category8 = pitchcategory8 )
 
-@main.route('/minutepitch/pitches')
+@main.route('/<category>/pitches')
 @login_required
 def new_pitch(id):
-  pass
+  form = AddPitch
+  if form.validate_on_submit():
+    title = form.title.data
+    category = PitchCategory.query.filter_by(category = form.category.data).first()
+    content = form.content.data
+
+    pitch = Pitch(title=title, category=category, content=content)
+
+    db.session.add(pitch)
+    db.session.commit()
+
 
 @main.route('/user/<sname>')
 def user_profile(sname):
