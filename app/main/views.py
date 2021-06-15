@@ -1,7 +1,7 @@
 from flask import render_template, abort, redirect, url_for
 from flask_login import login_required
 from . import main
-from ..models import User, UserProfile, PitchCategory, Pitch
+from ..models import User, UserProfile, PitchCategory, Pitch, Vote
 from .forms import AddPitch, UpdateProfile
 from .. import db
 
@@ -19,16 +19,17 @@ def index():
  return render_template('index.html', category1 = pitchcategory1, category2 = pitchcategory2,category3 = pitchcategory3,category4 = pitchcategory4,
   category5 = pitchcategory5,category6 = pitchcategory6,category7 = pitchcategory7,category8 = pitchcategory8 )
 
-@main.route('/pitches', methods =['GET','POST'])
+@main.route('/<sname>/pitches', methods = ['GET','POST'])
 @login_required
-def new_pitch():
-  formAdd = AddPitch
+def new_pitch(sname):
+  formAdd = AddPitch()
   if formAdd.validate_on_submit():
-    title = formAdd.title.data
-    category = PitchCategory.query.filter_by(category = formAdd.category.data).first()
-    content = formAdd.content.data
+    title = formAdd.head.data
+    category = PitchCategory.query.filter_by(category = formAdd.cat.data).first()
+    content = formAdd.text.data
+    user = User.query.filter_by(name = sname).first()
 
-    pitch = Pitch(title=title, category=category, content=content)
+    pitch = Pitch(title=title, category=category.id, content=content, postedBy = user.id)
 
     db.session.add(pitch)
     db.session.commit()

@@ -1,6 +1,6 @@
 from flask_wtf.form import FlaskForm
 from wtforms.fields.core import RadioField, StringField
-from wtforms.fields.simple import SubmitField
+from wtforms.fields.simple import SubmitField, TextAreaField
 from wtforms.validators import Required
 
 
@@ -17,8 +17,9 @@ class AddPitch(FlaskForm):
   '''
   creates form for adding pitch
   '''
-  title = StringField('Enter title')
-  category = RadioField('Category: ', choices=[('Pick-up Lines', 'pickuplines category'),('Motivation', 'Motivation category'),('Career', 'Career category'),('Business Ideas', 'Business ideas category'),('Games', 'Games category')
-  ,('Interview', 'Interview category')],default='Go wild')
-  content = StringField('Describe')
+  head = StringField('Enter title')
+  cat = RadioField('Category: ', choices=[('Pick-up Lines', 'pickuplines category'),('Motivation', 'Motivation category'),('Career', 'Career category'),('Business Ideas', 'Business ideas category'),
+  ('Games', 'Games category'),('Interview', 'Interview category')],default='Go wild')
+  text = TextAreaField('Describe')
+  submit = SubmitField('submit')
 
