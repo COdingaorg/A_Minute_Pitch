@@ -1,0 +1,32 @@
+{%extends 'macros.html'%}
+
+{%block head%}
+{{super()}}
+{%endblock%}
+
+{%block navbar%}
+{{super()}}
+
+{%endblock%}
+
+{%block content%}
+{%if pitches %}
+{%for pitch in pitches%}
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{pitch.title}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{pitch.users}}</h6>
+    <p class="card-text">{{pitch.content}}</p>
+    <small class="card-link">{{pitch.datePosted}}</small>
+    <small class="card-link">{{pitch.votes}}</small>
+  </div>
+</div>
+{%endfor%}
+{%else%}
+<p>No items have been added yet</p>
+<a href="{{url_for('main.new_pitch', sname=current_user.name)}}">Add your favorite pitch</a>
+{%endif%}
+
+
+{%endblock%}

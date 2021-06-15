@@ -72,10 +72,10 @@ def update_info(sname):
   
   return render_template('updateinfo.html', form = form)
 
-@main.route('/<category>/pitches', methods = ['GET'])
+@main.route('/pitches/<category>', methods = ['GET'])
 def view_category(category):
-  pitch = PitchCategory.query.filter_by(category = category)
-  items = pitch.fetchall()
+  pitch = PitchCategory.query.filter_by(category = category).first()
+  pitch_id = pitch.id
+  pitches = Pitch.query.filter_by(category = pitch_id).all()
 
-  return render_template(request(url_for('/<category>/pitches')), items = items)
-   
+  return render_template('pitchescategorized.html', pitches = pitches)
