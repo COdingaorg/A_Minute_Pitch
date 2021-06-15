@@ -9,3 +9,12 @@
   text-decoration: underline;
   color: red;
 }
+button.sign{
+  display: none;
+}
+.sign:hover{
+  display: block;
+}
+nav{
+  color:white
+}
