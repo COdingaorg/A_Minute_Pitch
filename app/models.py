@@ -5,6 +5,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from . import login_manager
 
+@login_manager.user_loader
+def load_user(user_id):
+  return User.query.get(int(user_id))
+
 class Pitch(db.Model):
   '''
   Defines arguments for pitch instances
@@ -60,16 +64,12 @@ class User(UserMixin ,db.Model):
     raise AttributeError('You cannot view password')
 
   @password.setter
-  def set_password(self, password):
-    self.password_hash=generate_password_hash(password)
+  def password(self, password):
+    self.password_hash = generate_password_hash(password)
 
   def verify_password(self, password):
-    return (self.password_hash, password)
+    return check_password_hash(self.password_hash, password)
 
-
-  @login_manager.user_loader
-  def load_user(id):
-    return User.query.get(int(id))
 
 class UserProfile(db.Model):
   '''
