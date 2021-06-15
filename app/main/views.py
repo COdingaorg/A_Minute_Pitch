@@ -1,4 +1,4 @@
-from flask import render_template, abort, redirect, url_for
+from flask import render_template, abort, redirect, url_for, request, url_for
 from flask_login import login_required
 from . import main
 from ..models import User, UserProfile, PitchCategory, Pitch, Vote
@@ -58,11 +58,19 @@ def update_info(sname):
 
   form = UpdateProfile()
   if form.validate_on_submit():
-    UpdateProfile.userBio = form.bio.data
+    profile = UserProfile(userBio = form.bio.data, userId = user.id)
 
-    db.session.add(user)
+    db.session.add(profile)
     db.session.commit()
 
     return redirect(url_for('main.user_profile', sname=user.name))
   
   return render_template('updateinfo.html', form = form)
+
+@main.route('/<category>/pitches', methods = ['GET'])
+def view_category(category):
+  pitch = PitchCategory.query.filter_by(category = category)
+  items = pitch.fetchall()
+
+  return render_template(request(url_for('/<category>/pitches')), items = items)
+   
