@@ -43,12 +43,17 @@ def new_pitch(sname):
 def user_profile(sname):
   user = User.query.filter_by(name = sname).first()
   user_id = user.id
-  user_prof = UserProfile.query.filter_by(userId = user_id)
+  user_prof = UserProfile.query.filter_by(userId = user_id).first()
 
   if user is None:
     abort(404)
+
+  user_prof = user_prof
+  pitches = Pitch.query.filter_by(postedBy = user_id).all()
+
+  pitch = pitches
   
-  return render_template('userinfo.html', user = user, user_prof = user_prof)
+  return render_template('userinfo.html', user = user, user_prof = user_prof, pitch = pitch)
 
 @main.route('/user/<sname>/update', methods =['GET','POST'])
 def update_info(sname):
