@@ -11,7 +11,9 @@
 {%block content%}
 {{user.name | capitalize}}
 {{user.email}}
-
+<div class="container">
+  <div class="row">
+  <div class="col-md-4">
     <!--Displaying user bio-->
     {% if user_prof.bio %}
       <p> {{user_prof.bio}}</p>
@@ -29,13 +31,17 @@
     <p>No profile picture</p>
     {% endif %} pitchesCreated
   </div>
+  <div class="col-md-4">
       <!--Displaying pitches-->
       {% if user_prof.pitchesCreated %}
       <p> {{user_prof.pitchesCreated}}</p>
-    {%else%}
+      {%else%}
       <p> {{user.name| capitalize}} has no pitches made </p>
-    {% endif %}
+      {% endif %}
   </div>
+  {% if user == current_user %}
+   <a href="{{url_for('main.updateinfo', sname = user.name)">update Profile</a>
+  {%endif%}
 </div>
 </div>
 {% endblock %}

@@ -29,6 +29,7 @@ def login():
   title = 'Login'
   return render_template('login.html', login_form = login_form, title = title)
 
+
 @auth.route('/logout')
 def logout():
   logout_user()
