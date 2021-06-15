@@ -6,7 +6,7 @@ from ..models import User
 class SignupForm(FlaskForm):
   username = StringField('Your Name: ', validators=[Required()])
   email = StringField('Email Address: ', validators=[Required(), Email()])
-  password = PasswordField('Create password: ', validators=[Length(min=6, max=16),Required(), EqualTo('password_confirm', message='Passwords must be the same')])
+  password = PasswordField('Create password: ', validators=[Required(), EqualTo('password_confirm', message='Passwords must be the same')])
   password_confirm = PasswordField('Repeat Password: ', validators=[Required()])
   signup = SubmitField('signup')
 

@@ -12,14 +12,13 @@ class Pitch(db.Model):
   __tablename__='pitches'
   id = db.Column(db.Integer, primary_key = True)
   title = db.Column(db.String(255))
-  category = db.Column(db.String(100), db.ForeignKey('categories.id'))
+  category = db.Column(db.Integer, db.ForeignKey('categories.id'))
   content = db.Column(db.String(255))
   datePosted = db.Column(db.DateTime,default=datetime.utcnow)
   votes = db.Column(db.Integer, db.ForeignKey('votes.id'))
   postedBy = db.Column(db.Integer, db.ForeignKey('users.id'))
   users = db.relationship('User', backref=backref('users', lazy='dynamic'))
   comments = db.relationship('Comment', backref = 'comments', lazy = 'dynamic')
-  category_item = db.relationship('PitchCategory', backref=backref('category_item', lazy='dynamic'))
 
 class Comment(db.Model):
   '''
@@ -61,11 +60,11 @@ class User(UserMixin ,db.Model):
     raise AttributeError('You cannot view password')
 
   @password.setter
-  def _set_password(self, password):
+  def set_password(self, password):
     self.password_hash=generate_password_hash(password)
 
-  # def verify_password(self, password):
-  #   return check_password_hash(self.password_hash, password)
+  def verify_password(self, password):
+    return (self.password_hash, password)
 
 
   @login_manager.user_loader
@@ -88,5 +87,4 @@ class PitchCategory(db.Model):
   __tablename__ = 'categories'
   id = db.Column(db.Integer, primary_key = True)
   category = db.Column(db.String(100))
-  pitchesContained = db.Column(db.Integer, db.ForeignKey('pitches.id'))
-  pitchitem = db.relationship('Pitch', backref=backref('pitchitem', lazy='dynamic'))
+  pitchitem = db.relationship('Pitch', backref='pitchitem', lazy='dynamic')

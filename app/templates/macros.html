@@ -35,7 +35,9 @@
         </li>
         <li class="nav-item">
           {%if current_user.is_authenticated%}
-          <span class="name">{{current_user.name}}</span><a class="nav-link" href="{{url_for('auth.logout')}}">Log Out</a>
+          <span class="name">{{current_user.name}}</span>
+          <a href="{{url_for('main.userinfo', sname=current_user.name)}}">| Info</a>
+          <a class="nav-link" href="{{url_for('auth.logout')}}">Log Out</a>
           {%else%}
           <span><a href="{{url_for('auth.login')}}">Log in</a></span>
           {%endif%}

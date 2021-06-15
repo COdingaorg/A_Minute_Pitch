@@ -10,6 +10,35 @@
 
 {%block content%}
 {{user.name | capitalize}}
+{{user.email}}
+
+    <!--Displaying user bio-->
+    {% if user_prof.bio %}
+      <p> {{user_prof.bio}}</p>
+    {%else%}
+      <p> {{user.name| capitalize}} has no bio </p>
+    {% endif %}
+  </div>
+
+  <!--Display profile photo-->
+  <div class="col-md-4">
+
+    {% if user_prof.photo_path %}
+    <img src="{{url_for('static',filename=user_prog.photo_path)}}" alt="user picture" class="img-thumbnail">
+    {%else%}
+    <p>No profile picture</p>
+    {% endif %} pitchesCreated
+  </div>
+      <!--Displaying pitches-->
+      {% if user_prof.pitchesCreated %}
+      <p> {{user_prof.pitchesCreated}}</p>
+    {%else%}
+      <p> {{user.name| capitalize}} has no pitches made </p>
+    {% endif %}
+  </div>
+</div>
+</div>
+{% endblock %}
 
 
 {%endblock%}

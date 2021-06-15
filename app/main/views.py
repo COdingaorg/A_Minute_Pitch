@@ -13,11 +13,12 @@ def new_pitch(id):
   pass
 
 @main.route('/user/<sname>')
-@login_required
 def user_profile(sname):
   user = User.query.filter_by(name = sname).first()
+  user_id = user.id
+  user_prof = UserProfile.query.filter_by(userId = user_id)
 
   if user is None:
     abort(404)
   
-  return render_template('info/userinfo.html', user = user)
+  return render_template('info/userinfo.html', user = user, user_prof = user_prof)
