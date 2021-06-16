@@ -18,11 +18,10 @@ class ProdConfig(Config):
   '''
   Configurations for production mode
   '''
-  # SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
-  # if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
-  #   SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql://")
+  SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+  if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
+    SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql://")
 
-  # pass
 
 class DevConfig(Config):
   '''

@@ -1,6 +1,5 @@
 # A_Minute_Pitch
-This is a website that shows one minute pitches to improve your first impression.
-
+A website that shows pitches based on categories. A user can create account, log in and create a pitch relevant to a category. Future Developments to implement voting and comments. In the user info, a user can see created pitches, email and name. A user can also add a bio and a picture.
 
 # User journey.
 A user visits the site.
