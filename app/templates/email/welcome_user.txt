@@ -1,0 +1,7 @@
+Hello {{user.name}},
+Welcome To Pitch Minute
+Here we submit a one minute statement, that will help in a percetion of you as a person.
+You know like thay say, First impressions mattaer, Here we make the imressions.
+Read, and add your own pitches and enjoy the fun
+
+Welcome again, and see you

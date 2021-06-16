@@ -1,3 +1,4 @@
+from app.mail import mail_message
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required
 from . import auth
@@ -12,7 +13,11 @@ def register():
     user = User(name = form.username.data, email = form.email.data, password_hash = form.password.data)
     db.session.add(user)
     db.session.commit()
+
+    mail_message('Welcome to Minute Pitch','email/welcome_user',user.email, user=user)
+    
     return redirect(url_for('auth.login'))
+
   title = "Create account"
   return render_template('register.html', signupForm = form, title = title)
 
