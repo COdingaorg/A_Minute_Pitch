@@ -2,15 +2,12 @@ from flask_wtf.form import FlaskForm
 from wtforms.fields.core import RadioField, StringField
 from wtforms.fields.simple import SubmitField, TextAreaField
 from wtforms.validators import Required
-from wtforms.widgets.core import FileInput
-
 
 
 class UpdateProfile(FlaskForm):
   '''
   creates form for updating user profile
   '''
-  photo = FileInput('upload File')
   bio = StringField('How do you explain yourself: ', validators=[Required()])
   submit = SubmitField('submit')
 

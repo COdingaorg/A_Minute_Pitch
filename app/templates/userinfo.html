@@ -13,42 +13,49 @@
 {{user.email}}
 <div class="container">
   <div class="row">
-  <div class="col-md-4">
-    <!--Displaying user bio-->
-    {% if user_prof.userBio %}
+    <div class="col-md-4">
+      <!--Displaying user bio-->
+      {% if user_prof.userBio %}
       <p> {{user_prof.userBio}}</p>
-    {%else%}
+      {%else%}
       <p> {{user.name| capitalize}} has no bio </p>
-    {% endif %}
-  </div>
+      {% endif %}
+    </div>
 
-  <!--Display profile photo-->
-  <div class="col-md-4">
+    <!--Display profile photo-->
+    <div class="col-md-4">
 
-    {% if user_prof.photo_path %}
-    <img src="{{url_for('static',filename=user_prog.photo_path)}}" alt="user picture" class="img-thumbnail">
-    {%else%}
-    <p>No profile picture</p>
-    {% endif %} pitchesCreated
-  </div>
-  <div class="col-md-4">
+      {% if user_prof.photo_path %}
+      <img src="{{url_for('static',filename=user.profile_photo_path)}}" alt="user picture" class="img-thumbnail">
+      {%else%}
+      <p>No profile picture</p>
+      {% endif %}
+
+      {% if user == current_user %}
+      <form action="{{url_for('main.update_info',sname=user.name)}}" method="post" enctype="multipart/form-data">
+        <input type="file" name="photo" class="form-control" required>
+        <input type="submit">
+      </form>
+      {% endif %}
+    </div>
+    <div class="col-md-4">
       <!--Displaying pitches-->
       {% if pitch %}
-      
-      
-        {% for item in pitch%}
-        <h4> {{item.title}}</h4>
-        <p>{{item.content}}</p>
-        <div class="col-md-6"><small>{{item.category}}</small></div>
-        <div class="col-md-6"><small>{{item.datePosted}}</small></div>
-      </div>
-        {%endfor%}
-      {%else%}
-      <p> {{user.name| capitalize}} has no pitches made </p>
-      {% endif %}
+
+
+      {% for item in pitch%}
+      <h4> {{item.title}}</h4>
+      <p>{{item.content}}</p>
+      <div class="col-md-6"><small>{{item.category}}</small></div>
+      <div class="col-md-6"><small>{{item.datePosted}}</small></div>
+    </div>
+    {%endfor%}
+    {%else%}
+    <p> {{user.name| capitalize}} has no pitches made </p>
+    {% endif %}
   </div>
   {% if user == current_user %}
-   <a href="{{url_for('main.update_info', sname = user.name)}}">update Profile</a>
+  <a href="{{url_for('main.update_info', sname = user.name)}}">update Profile</a>
   {%endif%}
 </div>
 </div>

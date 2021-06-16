@@ -3,7 +3,8 @@ from flask_login import login_required
 from . import main
 from ..models import User, UserProfile, PitchCategory, Pitch, Vote
 from .forms import AddPitch, UpdateProfile
-from .. import db
+from .. import db, photos
+from flask_wtf import form
 
 @main.route('/')
 def index():
@@ -52,8 +53,19 @@ def user_profile(sname):
   pitches = Pitch.query.filter_by(postedBy = user_id).all()
 
   pitch = pitches
+
+  @main.route('/user/<sname>/update_pic')
+  @login_required
+  def update_photo(sname):
+    user = User.query.filter_by(username = sname).first()
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        user.profile_pic_path = path
+        db.session.commit()
+    return redirect(url_for('main.profile',sname=sname))
   
-  return render_template('userinfo.html', user = user, user_prof = user_prof, pitch = pitch)
+  return render_template('userinfo.html', user = user, user_prof = user_prof, pitch = pitch, form = form)
 
 @main.route('/user/<sname>/update', methods =['GET','POST'])
 def update_info(sname):

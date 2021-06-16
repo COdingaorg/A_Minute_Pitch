@@ -1,3 +1,4 @@
+import os
 from app import create_app, db
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
@@ -5,6 +6,7 @@ from app.models import Comment, Pitch, User, Vote
 
 #creating app instance
 app = create_app('development')
+app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd()
 
 migrate = Migrate(app, db)
 manager = Manager(app)
