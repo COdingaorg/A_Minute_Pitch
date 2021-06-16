@@ -18,3 +18,10 @@ button.sign{
 nav{
   color:white
 }
+
+#image{
+  background-image: url('images/impress.jpg');
+  width: 500px;
+  height: 500px;
+  color: red;
+}
