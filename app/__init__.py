@@ -6,8 +6,6 @@ from flask_login import LoginManager
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 from flask_wtf import CsrfProtect
 from flask_mail import Mail
-from werkzeug.utils import secure_filename
-from werkzeug.datastructures import FileStorage
 
 db = SQLAlchemy()
 bootstrap = Bootstrap()
