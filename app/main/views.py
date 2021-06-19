@@ -1,10 +1,14 @@
 from flask import render_template, abort, redirect, url_for, request, url_for
 from flask_login import login_required
+from sqlalchemy.sql.expression import true
 from . import main
 from ..models import User, UserProfile, PitchCategory, Pitch, Vote
 from .forms import AddCategory, AddPitch, UpdateProfile
 from .. import db, photos
 from flask_wtf import form
+from sqlalchemy import Table, MetaData, engine
+
+metadata = MetaData(bind=engine)
 
 @main.route('/')
 def index():
@@ -23,14 +27,36 @@ def new_pitch(sname):
   formAdd = AddPitch()
   if formAdd.validate_on_submit():
     title = formAdd.head.data
-    category = PitchCategory.query.filter_by(category = formAdd.cat.data).first()
+    category = formAdd.cat.data
     content = formAdd.text.data
     user = User.query.filter_by(name = sname).first()
 
-    pitch = Pitch(title=title, category=category.id, content=content, postedBy = user.id)
+    if category == 'Business Ideas':
+      category_id = 1
+    elif category == 'Products Ideas':
+      category_id = 2
+    elif category == 'Pick-up Lines Ideas':
+      category_id = 3
+    elif category == 'Motivation Ideas':
+      category_id = 4
+    elif category == 'Career Ideas':
+      category_id = 5
+    elif category == 'Games Ideas':
+      category_id = 6
+    elif category == 'Interview Ideas':
+      category_id = 7
+    else:
+      category_id = 8
+  
+    # # category_id = PitchCategory.query.filter_by(category = category)
+    # categorydt = Pitch.query.filter_by(id = category_id).first()
+
+
+    pitch = Pitch(title=title, category=category_id, content=content, postedBy = user.id)
 
     db.session.add(pitch)
     db.session.commit()
+
     return redirect(url_for('main.index'))
 
 
