@@ -16,7 +16,7 @@ class AddPitch(FlaskForm):
   creates form for adding pitch
   '''
   head = StringField('Enter title')
-  cat = RadioField(u'Category: ', choices=[('Business Ideas', 'Business'),('Products Ideas','Products'),('Pick-up Lines Ideas','Pick-up Lines'),('Motivation Ideas','Motivation'),('Career Ideas','Career'),('Games Ideas','Games'),('Interview Ideas','Interview'),('Go Wild Ideas','Go Wild')],validators=Required())
+  cat = RadioField(u'Category: ', choices=[('Business Ideas', 'Business'),('Products Ideas','Products'),('Pick-up Lines Ideas','Pick-up Lines'),('Motivation Ideas','Motivation'),('Career Ideas','Career'),('Games Ideas','Games'),('Interview Ideas','Interview'),('Go Wild Ideas','Go Wild')],default='Go wild')
   text = TextAreaField('Describe')
   submit = SubmitField('submit')
 
