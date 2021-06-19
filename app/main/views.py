@@ -15,7 +15,6 @@ def index():
     cat = catego[0]
     catList.append(cat)
 
-  
     
   return render_template('index.html', categoriesList = catList)
 
