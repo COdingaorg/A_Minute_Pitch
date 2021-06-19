@@ -5,7 +5,7 @@ from flask_script import Manager
 from app.models import Comment, Pitch, User, Vote, PitchCategory
 
 #creating app instance
-app = create_app('development')
+app = create_app('production')
 app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd()
 
 migrate = Migrate(app, db)
