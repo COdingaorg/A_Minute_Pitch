@@ -8,14 +8,14 @@ from flask_wtf import form
 
 @main.route('/')
 def index():
-  pitchcategory1 = (PitchCategory.query.filter_by(id = 1).first()).category
-  pitchcategory2 = (PitchCategory.query.filter_by(id = 2).first()).category
-  pitchcategory3 = (PitchCategory.query.filter_by(id = 3).first()).category
-  pitchcategory4 = (PitchCategory.query.filter_by(id = 4).first()).category
-  pitchcategory5 = (PitchCategory.query.filter_by(id = 5).first()).category
-  pitchcategory6 = (PitchCategory.query.filter_by(id = 6).first()).category
-  pitchcategory7 = (PitchCategory.query.filter_by(id = 7).first()).category
-  pitchcategory8 = (PitchCategory.query.filter_by(id = 8).first()).category
+  pitchcategory1 = (PitchCategory.query.filter_by(id = 1).all()).category
+  pitchcategory2 = (PitchCategory.query.filter_by(id = 2).all()).category
+  pitchcategory3 = (PitchCategory.query.filter_by(id = 3).all()).category
+  pitchcategory4 = (PitchCategory.query.filter_by(id = 4).all()).category
+  pitchcategory5 = (PitchCategory.query.filter_by(id = 5).all()).category
+  pitchcategory6 = (PitchCategory.query.filter_by(id = 6).all()).category
+  pitchcategory7 = (PitchCategory.query.filter_by(id = 7).all()).category
+  pitchcategory8 = (PitchCategory.query.filter_by(id = 8).all()).category
 
   return render_template('index.html',pitchcategory1=pitchcategory1,pitchcategory2=pitchcategory2,pitchcategory3=pitchcategory3,pitchcategory4=pitchcategory4,pitchcategory5=pitchcategory5,pitchcategory6=pitchcategory6
   ,pitchcategory7=pitchcategory7,pitchcategory8=pitchcategory8)

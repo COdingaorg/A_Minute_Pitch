@@ -87,4 +87,4 @@ class PitchCategory(db.Model):
   __tablename__ = 'categories'
   id = db.Column(db.Integer, primary_key = True)
   category = db.Column(db.String(100))
-  pitchitem = db.relationship('Pitch', backref='pitchitem', lazy='dynamic')
+  pitchitem = db.relationship('Pitch', backref='pitchitem', lazy='dynamic') 
