@@ -18,7 +18,6 @@ def index():
     
   return render_template('index.html', categoriesList = catList)
 
-@login_required
 @main.route('/<sname>/pitches', methods = ['GET','POST'])
 def new_pitch(sname):
   formAdd = AddPitch()

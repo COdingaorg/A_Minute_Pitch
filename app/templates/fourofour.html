@@ -1,6 +1,7 @@
 {%extends 'macros.html'%}
 {%block head%}
 {{super()}}
+<link rel="stylesheet" href="../static/styles.css">
 {%endblock%}
 
 {%block navbar%}
@@ -9,9 +10,9 @@
 
 {%block content%}
 
-<div id="four">
-  <h3>{{title}}</h3>
-</div>
+  <h5>{{title}}</h5>
+
+<img src="../static/images/404-Not-Found.jpg" alt="404 error not FOund" width="500px">
 
 {%endblock%}
 
