@@ -2,23 +2,23 @@ from flask import render_template, abort, redirect, url_for, request, url_for
 from flask_login import login_required
 from . import main
 from ..models import User, UserProfile, PitchCategory, Pitch, Vote
-from .forms import AddPitch, UpdateProfile
+from .forms import AddCategory, AddPitch, UpdateProfile
 from .. import db, photos
 from flask_wtf import form
 
 @main.route('/')
 def index():
- pitchcategory1 = (PitchCategory.query.filter_by(id = 10).first()).category
- pitchcategory2 = (PitchCategory.query.filter_by(id = 11).first()).category
- pitchcategory3 = (PitchCategory.query.filter_by(id = 12).first()).category
- pitchcategory4 = (PitchCategory.query.filter_by(id = 13).first()).category
- pitchcategory5 = (PitchCategory.query.filter_by(id = 14).first()).category
- pitchcategory6 = (PitchCategory.query.filter_by(id = 15).first()).category
- pitchcategory7 = (PitchCategory.query.filter_by(id = 16).first()).category
- pitchcategory8 = (PitchCategory.query.filter_by(id = 17).first()).category
+  pitchcategory1 = (PitchCategory.query.filter_by(id = 1).first()).category
+  pitchcategory2 = (PitchCategory.query.filter_by(id = 2).first()).category
+  pitchcategory3 = (PitchCategory.query.filter_by(id = 3).first()).category
+  pitchcategory4 = (PitchCategory.query.filter_by(id = 4).first()).category
+  pitchcategory5 = (PitchCategory.query.filter_by(id = 5).first()).category
+  pitchcategory6 = (PitchCategory.query.filter_by(id = 6).first()).category
+  pitchcategory7 = (PitchCategory.query.filter_by(id = 7).first()).category
+  pitchcategory8 = (PitchCategory.query.filter_by(id = 8).first()).category
 
- return render_template('index.html', category1 = pitchcategory1, category2 = pitchcategory2,category3 = pitchcategory3,category4 = pitchcategory4,
-  category5 = pitchcategory5,category6 = pitchcategory6,category7 = pitchcategory7,category8 = pitchcategory8 )
+  return render_template('index.html',pitchcategory1=pitchcategory1,pitchcategory2=pitchcategory2,pitchcategory3=pitchcategory3,pitchcategory4=pitchcategory4,pitchcategory5=pitchcategory5,pitchcategory6=pitchcategory6
+  ,pitchcategory7=pitchcategory7,pitchcategory8=pitchcategory8)
 
 @main.route('/<sname>/pitches', methods = ['GET','POST'])
 @login_required
@@ -91,3 +91,15 @@ def view_category(category):
   pitches = Pitch.query.filter_by(category = pitch_id).all()
 
   return render_template('pitchescategorized.html', pitches = pitches)
+
+
+@main.route('/categoriesadd', methods= ['GET', 'POST'])
+def addCat():
+  form = AddCategory()
+  if form.validate_on_submit():
+    categ = PitchCategory(category = form.title.data)
+
+    db.session.add(categ)
+    db.session.commit()
+    return redirect(url_for('main.addCat'))
+  return render_template('addcat.html', form =form)

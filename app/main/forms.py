@@ -21,3 +21,6 @@ class AddPitch(FlaskForm):
   text = TextAreaField('Describe')
   submit = SubmitField('submit')
 
+class AddCategory(FlaskForm):
+  title = StringField('Enter category')
+  submit = SubmitField('submit')
